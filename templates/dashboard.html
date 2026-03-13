@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - LiveKit Admin{% endblock %}
+
+{% block content %}
+<div class="grid grid-cols-1 gap-8">
+    <!-- Trunks Section -->
+    <section class="bg-white rounded-xl shadow-md overflow-hidden">
+        <div class="p-6">
+            <h2 class="text-xl font-bold text-gray-800 flex items-center mb-6">
+                <i class="fas fa-phone-alt mr-2 text-indigo-500"></i>
+                SIP Trunks
+            </h2>
+            <div hx-get="/trunks" hx-trigger="load" class="overflow-x-auto">
+                <div class="flex justify-center items-center py-10">
+                    <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-indigo-600"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dispatch Rules Section -->
+    <section class="bg-white rounded-xl shadow-md overflow-hidden">
+        <div class="p-6">
+            <h2 class="text-xl font-bold text-gray-800 flex items-center mb-6">
+                <i class="fas fa-route mr-2 text-indigo-500"></i>
+                SIP Dispatch Rules
+            </h2>
+            <div hx-get="/dispatch-rules" hx-trigger="load" class="overflow-x-auto">
+                <div class="flex justify-center items-center py-10">
+                    <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-indigo-600"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

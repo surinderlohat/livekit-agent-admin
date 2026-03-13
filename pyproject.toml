@@ -1,0 +1,14 @@
+
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.lint]
+# Enable the default set of rules, equivalent to pycodestyle, Pyflakes, and more.
+select = ["E", "F", "W"]
+
+# You can also enable additional rules, such as isort for import sorting.
+# select = ["E", "F", "W", "I"]
+
+[tool.ruff.format]
+# Use black-compatible formatting.
+quote-style = "double"

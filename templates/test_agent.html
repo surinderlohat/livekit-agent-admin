@@ -1,0 +1,17 @@
+<div class="bg-gray-900 text-green-400 p-6 rounded-xl font-mono text-sm shadow-2xl border border-gray-700">
+    <div class="flex items-center justify-between mb-4 border-b border-gray-700 pb-2">
+        <span>Testing Agent: {{ agent.name }} ({{ agent.type }})</span>
+        <button onclick="this.closest('#test-area').innerHTML = ''" class="text-gray-500 hover:text-white">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+    <div class="space-y-2">
+        <p>> Initializing {{ agent.type }} engine...</p>
+        <p class="animate-pulse">> Connecting to LiveKit server...</p>
+        <p>> Authentication successful.</p>
+        <p class="text-yellow-400">> Warning: This is a simulated test environment.</p>
+        <div class="pt-4">
+            <input type="text" placeholder="Type a message to {{ agent.name }}..." class="bg-gray-800 border border-gray-700 rounded px-3 py-1 w-full text-white outline-none focus:border-indigo-500">
+        </div>
+    </div>
+</div>

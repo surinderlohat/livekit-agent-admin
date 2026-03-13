@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}LiveKit Admin Panel{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        .htmx-indicator { display: none; }
+        .htmx-request .htmx-indicator { display: block; }
+        .htmx-request.htmx-indicator { display: block; }
+        
+        /* Custom scrollbar for better UI */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #888; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #555; }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans text-gray-900 min-h-screen flex flex-col">
+
+    <!-- Navbar -->
+    <nav class="bg-indigo-700 text-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center cursor-pointer" hx-get="/tab/dashboard" hx-target="#main-content" hx-push-url="true">
+                    <i class="fas fa-broadcast-tower mr-3 text-2xl text-indigo-200"></i>
+                    <span class="font-bold text-xl tracking-tight">LiveKit Admin</span>
+                </div>
+                <div class="flex items-center space-x-2 sm:space-x-4">
+                    <button 
+                        hx-get="/tab/dashboard" 
+                        hx-target="#main-content" 
+                        hx-push-url="true"
+                        class="px-3 py-2 rounded-md text-sm font-medium hover:bg-indigo-600 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                    >
+                        <i class="fas fa-chart-line mr-1"></i> Dashboard
+                    </button>
+                    <button 
+                        hx-get="/tab/agents" 
+                        hx-target="#main-content" 
+                        hx-push-url="true"
+                        class="px-3 py-2 rounded-md text-sm font-medium hover:bg-indigo-600 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                    >
+                        <i class="fas fa-robot mr-1"></i> Agents
+                    </button>
+                    <button 
+                        hx-get="/tab/settings" 
+                        hx-target="#main-content" 
+                        hx-push-url="true"
+                        class="px-3 py-2 rounded-md text-sm font-medium hover:bg-indigo-600 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                    >
+                        <i class="fas fa-cog mr-1"></i> Settings
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main id="main-content" class="flex-grow max-w-7xl w-full mx-auto py-6 px-4 sm:px-6 lg:px-8">
+        {% block content %}
+        <!-- Default content for index load -->
+        <div hx-get="/tab/dashboard" hx-trigger="load" hx-target="this">
+            <div class="flex flex-col justify-center items-center py-20 space-y-4">
+                <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div>
+                <p class="text-gray-500 font-medium">Loading Dashboard...</p>
+            </div>
+        </div>
+        {% endblock %}
+    </main>
+
+    <footer class="bg-white border-t border-gray-200 py-6 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 text-gray-500 text-sm">
+                <div>&copy; 2026 LiveKit Agent Management. All rights reserved.</div>
+                <div class="flex space-x-6">
+                    <a href="#" class="hover:text-indigo-600 transition-colors">Documentation</a>
+                    <a href="#" class="hover:text-indigo-600 transition-colors">Support</a>
+                    <a href="#" class="hover:text-indigo-600 transition-colors">API Status</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Global Error Toast Notification (Optional, can be used by HTMX) -->
+    <div id="toast-container" class="fixed bottom-5 right-5 z-[100]"></div>
+
+</body>
+</html>
