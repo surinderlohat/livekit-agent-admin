@@ -69,6 +69,11 @@ def save_config(db: Session, key: str, value: str):
     db.commit()
 
 
+@app.get("/health")
+def health():
+    return {"status": "ok"}
+
+
 @app.get("/tab/dashboard", response_class=HTMLResponse)
 async def tab_dashboard(request: Request):
     return templates.TemplateResponse("dashboard.html", {"request": request})

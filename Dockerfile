@@ -1,21 +1,45 @@
-
-# Use an official Python runtime as a parent image
+# ---- Base image ----
 FROM python:3.11-slim
 
-# Set the working directory in the container
+# ---- Environment settings ----
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PIP_NO_CACHE_DIR=1 \
+    PORT=8000
+
+# ---- Install system dependencies (needed for healthcheck curl) ----
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# ---- Create non-root user ----
+RUN useradd -m appuser
+
+# ---- Set working directory ----
 WORKDIR /app
 
-# Copy the dependencies file to the working directory
-COPY requirements.txt .
+# ---- Copy dependency files first (IMPORTANT for caching) ----
+COPY requirements.txt pyproject.toml* ./
 
-# Install any needed packages specified in requirements.txt
-RUN pip install --no-cache-dir -r requirements.txt
+# ---- Install Python dependencies ----
+RUN pip install --upgrade pip \
+    && pip install -r requirements.txt
 
-# Copy the content of the local src directory to the working directory
+# ---- Copy application code ----
 COPY . .
 
-# Expose port 8000 to the outside world
+# ---- Set permissions ----
+RUN chown -R appuser:appuser /app
+
+# ---- Switch to non-root user ----
+USER appuser
+
+# ---- Default exposed port ----
 EXPOSE 8000
 
-# Command to run the application
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+# ---- Container health check ----
+HEALTHCHECK --interval=30s --timeout=10s --start-period=10s --retries=3 \
+  CMD curl -f http://localhost:${PORT}/health || exit 1
+
+# ---- Start FastAPI ----
+CMD ["sh", "-c", "uvicorn main:app --host 0.0.0.0 --port $PORT"]
