@@ -34,22 +34,36 @@ The project intentionally avoids heavy frontend frameworks and keeps the archite
 
 Clone the repository:
 
-```
+```bash
 git clone https://github.com/YOUR_REPO_NAME.git
 cd YOUR_REPO_NAME
 ```
 
 Create virtual environment:
 
-```
+```bash
 python -m venv venv
 source venv/bin/activate
 ```
 
 Install dependencies:
 
-```
+```bash
 pip install -r requirements.txt
+```
+
+### Environment Variables
+
+Create a `.env` file in the root directory to configure your server:
+
+```env
+# Database configuration (Optional, defaults to sqlite:///./.db/livekit_admin.db)
+DATABASE_URL="sqlite:///./.db/livekit_admin.db"
+
+# LiveKit API credentials
+LIVEKIT_URL="http://localhost:7880"
+LIVEKIT_API_KEY="devkey"
+LIVEKIT_API_SECRET="secret"
 ```
 
 Run the server:
@@ -60,39 +74,25 @@ uvicorn main:app --reload
 
 ---
 
-# Database Migrations
+# Database
 
 This project uses [Alembic](https://alembic.sqlalchemy.org/) for database migrations.
 
-### Create a new migration
-If you make changes to the database models, generate a new migration script:
+### Automatic Migrations
+Migrations are **automatically applied** when the server starts. You do not need to run any manual migration commands.
+
+> [!WARNING]
+> **Automatic Backup**: Before any migration is applied, the system will automatically create a backup of your current database in the `.db/backups/` directory. Ensure you have sufficient disk space for these backups.
+
+### Monitoring Schema
+To check the current migration status or history:
 
 ```bash
-alembic revision --autogenerate -m "describe your changes"
-```
-
-### Run migrations
-Apply the migrations to your database:
-
-```bash
-alembic upgrade head
-```
-
-### Database Schema
-```
+# See migration history
 alembic history 
-```
-```
-alembic heads
 
-```
-alembic current --verbose
-```
-
-Open:
-
-```
-http://localhost:8000
+# See current version
+alembic current
 ```
 
 ---

@@ -6,6 +6,9 @@ services:
       - "${PORT:-8000}:${PORT:-8000}"
     environment:
       - PORT=${PORT:-8000}
+      - DATABASE_URL=${DATABASE_URL:-sqlite:///./.db/livekit_admin.db}
+    volumes:
+      - .db:/app/.db
     restart: unless-stopped
 
     healthcheck:

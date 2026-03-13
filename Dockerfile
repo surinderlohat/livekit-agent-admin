@@ -28,8 +28,8 @@ RUN pip install --upgrade pip \
 # ---- Copy application code ----
 COPY . .
 
-# ---- Set permissions ----
-RUN chown -R appuser:appuser /app
+# ---- Ensure DB directory exists for non-root user ----
+RUN mkdir -p /app/.db && chown -R appuser:appuser /app
 
 # ---- Switch to non-root user ----
 USER appuser
