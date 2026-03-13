@@ -8,6 +8,9 @@ The goal of this project is to provide a **minimal, open-source admin UI for the
 
 ---
 
+## License
+This project is licensed under the Apache License 2.0.
+
 # Features
 
 * System prompt editor for AI agents
