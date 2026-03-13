@@ -1,5 +1,7 @@
 from logging.config import fileConfig
 
+import logging
+
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 
@@ -23,6 +25,10 @@ from models import Base
 from database import DATABASE_URL
 
 load_dotenv()
+
+logger = logging.getLogger(__name__)
+
+logger.info(f"Using database URL: {DATABASE_URL}")
 
 config.set_main_option('sqlalchemy.url', DATABASE_URL)
 

@@ -1,13 +1,4 @@
 import logging
-
-# Configure logging
-logging.basicConfig(
-    level=logging.INFO,
-    filename="app.log",
-    filemode="a",
-    format="%(name)s - %(levelname)s - %(message)s",
-)
-
 import os
 import traceback
 import uuid
@@ -21,6 +12,14 @@ from sqlalchemy.orm import Session
 from database import get_db, init_db
 from models import Agent, Config
 from services.livekit_service import list_dispatch_rules, list_trunks
+
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    filename="app.log",
+    filemode="a",
+    format="%(name)s - %(levelname)s - %(message)s",
+)
 
 
 async def production_exception_handler(request: Request, exc: Exception):

@@ -54,8 +54,39 @@ pip install -r requirements.txt
 
 Run the server:
 
+```bash
+uvicorn main:app --reload
 ```
-uvicorn app.main:app --reload
+
+---
+
+# Database Migrations
+
+This project uses [Alembic](https://alembic.sqlalchemy.org/) for database migrations.
+
+### Create a new migration
+If you make changes to the database models, generate a new migration script:
+
+```bash
+alembic revision --autogenerate -m "describe your changes"
+```
+
+### Run migrations
+Apply the migrations to your database:
+
+```bash
+alembic upgrade head
+```
+
+### Database Schema
+```
+alembic history 
+```
+```
+alembic heads
+
+```
+alembic current --verbose
 ```
 
 Open:
